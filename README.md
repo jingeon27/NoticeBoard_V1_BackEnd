@@ -44,3 +44,42 @@ export class CatsModule {}
 ### middleware
 
 - nest 만에 middleware는 없는듯 하다. express꺼 갖다 쓴다. 근데 decorator 잘 활용하면 middleware 쓸일 없을지도?
+
+```js
+import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
+
+@Injectable()
+export class LoggerMiddleware implements NestMiddleware {
+  use(req: Request, res: Response, next: NextFunction) {
+    console.log('Request...');
+    next();
+  }
+}
+```
+
+middleware파일 따로 만들어서 거기서 middleware을 생성한다.
+
+```js
+import {
+  Module,
+  NestModule,
+  RequestMethod,
+  MiddlewareConsumer,
+} from '@nestjs/common';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { CatsModule } from './cats/cats.module';
+
+@Module({
+  imports: [CatsModule],
+})
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: 'cats', method: RequestMethod.GET });
+  }
+}
+```
+
+module에서 middleware을 사용 한다.
