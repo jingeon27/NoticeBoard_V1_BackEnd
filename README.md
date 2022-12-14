@@ -24,3 +24,19 @@
 - provider 역시 콘솔 명령어로 만들 수 있다.
 - provider는 DI 할 수 있다. 개체 인스턴스를 연결하는 기능이다.
 - provider는 일반적으로 애플리케이션 생명주기와 같은 스코프를 갖고 있다
+
+### module
+
+```js
+import { Module } from '@nestjs/common';
+import { CatsController } from './cats.controller';
+import { CatsService } from './cats.service';
+
+@Module({
+  controllers: [CatsController],
+  providers: [CatsService],
+})
+export class CatsModule {}
+```
+
+이런식으로 만들고 imports[]안에다가 넣어 붙이면 된다. 전역적으로 쓰고 싶으면 global 데코레이터 쓰면 된다. 순환종속성으로 인해 공급자를 주입할 수 없다.
