@@ -40,3 +40,7 @@ export class CatsModule {}
 ```
 
 이런식으로 만들고 imports[]안에다가 넣어 붙이면 된다. 전역적으로 쓰고 싶으면 global 데코레이터 쓰면 된다. 순환종속성으로 인해 공급자를 주입할 수 없다.
+
+### middleware
+
+- nest 만에 middleware는 없는듯 하다. express꺼 갖다 쓴다. 근데 decorator 잘 활용하면 middleware 쓸일 없을지도?
